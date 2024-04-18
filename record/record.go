@@ -3,14 +3,20 @@ package record
 import (
 	"encoding/csv"
 	"fmt"
+	"github.com/spf13/viper"
 	"os"
+	"os/user"
 	"text/tabwriter"
 	"time"
 )
 
-var filepath = "record.csv"
+func GetFilePath() string {
+	usr, _ := user.Current()
+	return usr.HomeDir + "/" + viper.GetString("fileName")
+}
 
 func Save(query string, result string) error {
+	filepath := GetFilePath()
 	_, err := os.Stat(filepath)
 	if os.IsNotExist(err) {
 		file, err := os.Create(filepath)
@@ -49,6 +55,7 @@ func Save(query string, result string) error {
 }
 
 func List() ([]map[string]string, error) {
+	filepath := GetFilePath()
 	_, err := os.Stat(filepath)
 	if os.IsNotExist(err) {
 		return []map[string]string{}, nil

@@ -19,6 +19,9 @@ that simplify the translation work. It can identify the language automatically.
 ```shell
 go build -o trans main.go
 go install trans
+
+# or
+make deploy
 ```
 
 ## Features
@@ -26,5 +29,15 @@ go install trans
 ```shell
 trans "I love coding" # 我喜欢编码
 trans 我喜欢游泳 # I like swimming
+```
 
+* History record
+```shell
+trans -l
+
+#                                 Query|                      Result|CreateTime
+#                                  ----|                         ---|-------
+#   Chinese people are very intelligent|                     中国人非常聪明|2024-04-18 17:02:10
+#                              我们的爱从未消失|   Our love never disappears|2024-04-18 17:04:12
+#            make the world much better|                    让世界变得更美好|2024-04-18 17:04:30
 ```
