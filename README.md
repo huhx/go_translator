@@ -6,7 +6,8 @@ it also provides the feature of querying the translation history.
 ## Background
 
 When I want to translate words between chinese and english,
-using the Google translation web page I need to choose the source and target language. It is less convenient to me. So I decide to develop a command line tool
+using the Google translation web page I need to choose the source and target language. It is less convenient to me. So I
+decide to develop a command line tool
 that simplify the translation work since it can identify the language automatically.
 
 ## Implementation
@@ -15,24 +16,17 @@ that simplify the translation work since it can identify the language automatica
 * `viper`: store the translation api key and secret
 * `http`: use to call translation api
 
-## Deploy
-
-```shell
-go build -o trans main.go
-go install trans
-
-# or
-make deploy
-```
-
 ## Features
-* Translation: 
+
+* Translation:
+
 ```shell
 trans "I love coding" # 我喜欢编码
 trans 我喜欢游泳 # I like swimming
 ```
 
 * History record
+
 ```shell
 trans -l
 
@@ -44,6 +38,26 @@ trans -l
 ```
 
 * Clean up history record
+
 ```shell
 trans -c # successfully cleared
+```
+
+## Deploy
+
+### prepare the viper configuration file:  ~/.go_translator.yaml
+```yaml
+appId: "{baidu_app_id}"
+appSecret: "{baidu_app_secret}"
+fileName: "go_translator_record.csv
+```
+https://fanyi-api.baidu.com/manage/developer
+
+### build the exec command
+```shell
+go build -o trans main.go
+go install trans
+
+# or
+make deploy
 ```

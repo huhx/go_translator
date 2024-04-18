@@ -2,13 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"os"
-	"trans/api"
-	"trans/record"
-	"trans/util"
-
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"os"
 )
 
 var cfgFile string
@@ -18,38 +14,19 @@ var cleanUp bool
 var rootCmd = &cobra.Command{
 	Use:   "trans",
 	Short: "Translate text from cn to en and force",
-	Long:  `A command line tool that translate chinese to english and vice versa, it also provides the feature of querying the translation history.`,
+	Long:  `A command line tool that translate chinese to english and vice versa, it also provides the feature of management the translation history.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) != 1 && !history && !cleanUp {
-			_, _ = fmt.Fprintln(os.Stderr, "Usage: trans <text>")
+			_, _ = fmt.Fprintln(os.Stderr, "Usage: trans [-l -c] <text>")
 			os.Exit(1)
 		}
 
 		if history {
-			list, err := record.List()
-			if err != nil {
-				panic(err)
-			}
-			record.Format(list)
-			return
-		}
-
-		if cleanUp {
-			record.Clear()
-			fmt.Println("successfully cleared")
-			return
-		}
-
-		text := args[0]
-
-		if util.IsChinese(text) {
-			result := api.ToEnglish(text)
-			record.Save(text, result)
-			println(result)
+			ListRecords()
+		} else if cleanUp {
+			ClearRecords()
 		} else {
-			result := api.ToChinese(text)
-			record.Save(text, result)
-			println(result)
+			Translate(args[0])
 		}
 	},
 }
