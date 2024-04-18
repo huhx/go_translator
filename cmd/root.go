@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"trans/api"
+	"trans/record"
 	"trans/util"
 
 	"github.com/spf13/cobra"
@@ -25,9 +26,11 @@ var rootCmd = &cobra.Command{
 
 		if util.IsChinese(text) {
 			result := api.ToEnglish(text)
+			record.Save(text, result)
 			println(result)
 		} else {
 			result := api.ToChinese(text)
+			record.Save(text, result)
 			println(result)
 		}
 	},
