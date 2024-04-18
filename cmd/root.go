@@ -12,16 +12,27 @@ import (
 )
 
 var cfgFile string
+var history bool
 
 var rootCmd = &cobra.Command{
 	Use:   "trans",
 	Short: "Translate text from cn to en and force",
 	Long:  `A command line tool that translate chinese to english and vice versa, it also provides the feature of querying the translation history.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) != 1 {
+		if len(args) != 1 && !history {
 			_, _ = fmt.Fprintln(os.Stderr, "Usage: trans <text>")
 			os.Exit(1)
 		}
+
+		if history {
+			list, err := record.List()
+			if err != nil {
+				panic(err)
+			}
+			record.Format(list)
+			return
+		}
+
 		text := args[0]
 
 		if util.IsChinese(text) {
@@ -47,6 +58,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.go_translator.yaml)")
+	rootCmd.PersistentFlags().BoolVarP(&history, "history", "l", false, "history output")
 }
 
 func initConfig() {
