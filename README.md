@@ -1,12 +1,13 @@
 A command line tool that translate chinese to english and vice versa,
 it also provides the feature of querying the translation history.
 
+> Right now, it only supports the English and Chinese languages.
+
 ## Background
 
-When I want to translate word between chinese and english,
-using the web page I need to choose the source and target language.
-it is less convenient to me. So I want to develop a command line tool
-that simplify the translation work. It can identify the language automatically.
+When I want to translate words between chinese and english,
+using the Google translation web page I need to choose the source and target language. It is less convenient to me. So I decide to develop a command line tool
+that simplify the translation work since it can identify the language automatically.
 
 ## Implementation
 
@@ -40,4 +41,9 @@ trans -l
 #   Chinese people are very intelligent|                     中国人非常聪明|2024-04-18 17:02:10
 #                              我们的爱从未消失|   Our love never disappears|2024-04-18 17:04:12
 #            make the world much better|                    让世界变得更美好|2024-04-18 17:04:30
+```
+
+* Clean up history record
+```shell
+trans -c # successfully cleared
 ```

@@ -54,6 +54,15 @@ func Save(query string, result string) error {
 	return nil
 }
 
+func Clear() error {
+	filepath := GetFilePath()
+	err := os.Remove(filepath)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func List() ([]map[string]string, error) {
 	filepath := GetFilePath()
 	_, err := os.Stat(filepath)
