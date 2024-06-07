@@ -8,7 +8,7 @@ import (
 )
 
 func ClearRecords() {
-	record.Clear()
+	_ = record.Clear()
 	fmt.Println("successfully cleared")
 }
 
@@ -23,11 +23,11 @@ func ListRecords() {
 func Translate(text string) {
 	if util.IsChinese(text) {
 		result := api.ToEnglish(text)
-		record.Save(text, result)
+		_ = record.Save(text, result)
 		println(result)
 	} else {
 		result := api.ToChinese(text)
-		record.Save(text, result)
+		_ = record.Save(text, result)
 		println(result)
 	}
 }

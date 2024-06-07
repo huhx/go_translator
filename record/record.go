@@ -56,8 +56,7 @@ func Save(query string, result string) error {
 
 func Clear() error {
 	filepath := GetFilePath()
-	err := os.Remove(filepath)
-	if err != nil {
+	if err := os.Remove(filepath); err != nil {
 		return err
 	}
 	return nil
@@ -98,14 +97,14 @@ func List() ([]map[string]string, error) {
 func Format(data []map[string]string) {
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', tabwriter.AlignRight|tabwriter.Debug)
 
-	fmt.Fprintf(w, "%s\t%s\t%s\n", "Query", "Result", "CreateTime")
-	fmt.Fprintf(w, "%s\t%s\t%s\n", "----", "---", "-------")
+	_, _ = fmt.Fprintf(w, "%s\t%s\t%s\n", "Query", "Result", "CreateTime")
+	_, _ = fmt.Fprintf(w, "%s\t%s\t%s\n", "----", "---", "-------")
 
 	// 打印数据
 	for _, row := range data {
-		fmt.Fprintf(w, "%s\t%s\t%s\n", row["query"], row["result"], row["createTime"])
+		_, _ = fmt.Fprintf(w, "%s\t%s\t%s\n", row["query"], row["result"], row["createTime"])
 	}
 
 	// 刷新并输出
-	w.Flush()
+	_ = w.Flush()
 }

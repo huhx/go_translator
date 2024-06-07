@@ -4,11 +4,11 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"github.com/samber/lo"
 	"github.com/spf13/viper"
 	"io"
 	"net/http"
 	"net/url"
-	"trans/util"
 )
 
 var baseURL = "http://api.fanyi.baidu.com/api/trans/vip/translate"
@@ -16,7 +16,7 @@ var baseURL = "http://api.fanyi.baidu.com/api/trans/vip/translate"
 func ToChinese(text string) string {
 	var appId = viper.GetString("appId")
 	var appSecret = viper.GetString("appSecret")
-	salt := util.RandomSalt(12)
+	salt := lo.RandomString(12, lo.AlphanumericCharset)
 	signString := fmt.Sprintf("%s%s%s%s", appId, text, salt, appSecret)
 	hash := md5.Sum([]byte(signString))
 	signature := hex.EncodeToString(hash[:])
@@ -44,7 +44,7 @@ func ToChinese(text string) string {
 func ToEnglish(text string) string {
 	var appId = viper.GetString("appId")
 	var appSecret = viper.GetString("appSecret")
-	salt := util.RandomSalt(12)
+	salt := lo.RandomString(12, lo.AlphanumericCharset)
 	signString := fmt.Sprintf("%s%s%s%s", appId, text, salt, appSecret)
 	hash := md5.Sum([]byte(signString))
 	signature := hex.EncodeToString(hash[:])
